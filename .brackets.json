@@ -1,0 +1,18 @@
+{
+    "livedev.multibrowser": true,
+    "sass.enabled": false,
+    "path": {
+        "scss/style.scss": {
+            "sass.enabled": true,
+            "sass.options": {
+                "outputDir": "../css/",
+                "includePaths": [],
+                "sourceComments": true,
+                "outputStyle": "nested"
+            },
+            "linting.collapsed": false,
+            "themes.theme": "dark-theme",
+            "livedev.multibrowser": true
+        }
+    }
+}

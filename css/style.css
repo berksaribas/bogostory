@@ -1,0 +1,93 @@
+/* line 1, C:/xampp/htdocs/bogostory/scss/style.scss */
+a {
+  text-decoration: none;
+  color: inherit; }
+
+/* line 5, C:/xampp/htdocs/bogostory/scss/style.scss */
+.field {
+  margin-top: 30px;
+  background-color: #f7f7f7; }
+  /* line 8, C:/xampp/htdocs/bogostory/scss/style.scss */
+  .field .field-title {
+    width: 100%;
+    background-color: gainsboro;
+    padding: 10px;
+    font-weight: bold; }
+  /* line 14, C:/xampp/htdocs/bogostory/scss/style.scss */
+  .field .field-content {
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap; }
+    /* line 19, C:/xampp/htdocs/bogostory/scss/style.scss */
+    .field .field-content.align-start {
+      justify-content: flex-start; }
+
+/* line 24, C:/xampp/htdocs/bogostory/scss/style.scss */
+.author {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 13px;
+  display: inline-block;
+  color: #1e1e1e;
+  padding-left: 5px; }
+
+/* line 33, C:/xampp/htdocs/bogostory/scss/style.scss */
+.user-info {
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  flex-basis: 100%; }
+  /* line 38, C:/xampp/htdocs/bogostory/scss/style.scss */
+  .user-info .user-image {
+    display: flex;
+    justify-content: center; }
+    /* line 41, C:/xampp/htdocs/bogostory/scss/style.scss */
+    .user-info .user-image img {
+      border-radius: 100%;
+      width: 70%; }
+  /* line 46, C:/xampp/htdocs/bogostory/scss/style.scss */
+  .user-info .user-name {
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    color: #191919; }
+  /* line 53, C:/xampp/htdocs/bogostory/scss/style.scss */
+  .user-info .stat {
+    text-align: center; }
+
+/* line 58, C:/xampp/htdocs/bogostory/scss/style.scss */
+.seperator {
+  margin: 10px 0 10px 0;
+  width: 100%;
+  height: 1px;
+  background-color: lightgray; }
+
+/* line 65, C:/xampp/htdocs/bogostory/scss/style.scss */
+.path {
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid lightgray;
+  align-items: center;
+  flex-flow: row wrap; }
+  /* line 72, C:/xampp/htdocs/bogostory/scss/style.scss */
+  .path .upvote {
+    margin-left: auto;
+    margin-right: 10px; }
+
+/* line 79, C:/xampp/htdocs/bogostory/scss/style.scss */
+img.card-img-top {
+  width: 100%; }
+
+/* line 82, C:/xampp/htdocs/bogostory/scss/style.scss */
+img.story-img {
+  margin: 0px auto 10px auto;
+  width: 90%; }
+  @media (min-width: 786px) {
+    /* line 82, C:/xampp/htdocs/bogostory/scss/style.scss */
+    img.story-img {
+      width: 450px; } }
+
+/*# sourceMappingURL=style.css.map */
