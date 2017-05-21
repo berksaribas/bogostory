@@ -29,7 +29,12 @@ $categories = mysqli_query($db, $categories_sql);
 	<ul class="navbar-nav">
 		<li class="nav-item my-2 my-lg-0">
             <?php if (isset($_SESSION['user_id'])): ?>
-            <a class="nav-link" href="logout.php">Logout</a>
+            <a class="nav-link" href="logout.php"
+               onclick="event.preventDefault();
+               document.getElementById('logout-form').submit();">
+                Logout
+            </a>
+            <form id="logout-form" action="logout.php" method="POST" style="display: none;"></form>
             <?php else: ?>
 			<a class="nav-link" href="login.php">Login/Register</a>
             <?php endif; ?>
