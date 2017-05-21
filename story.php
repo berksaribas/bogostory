@@ -51,13 +51,32 @@ while($row = mysqli_fetch_assoc($story)){
         <div class="alert alert-info" style="margin-top: 1rem;" role="alert">
             <strong>Rating: </strong> <?php if($story_upvote== NULL) echo "No one has voted yet."; else echo $story_upvote." with ".$story_vote_count." users voted"."."; ?>
             <div class="rate-holder">
-                <?php if (isset($_SESSION['user_id'])): ?>
-                <form action="storyvote.php" method="post">
-                    <button name="sid" class="btn btn-primary" value="<?php echo $story_id; ?>">Like</button>
+                <?php if (isset($_SESSION['user_id'])):
+                    $stmt2 = $db->prepare('SELECT positive FROM story_votes WHERE uid = ? AND sid = ?');
+                    $stmt2->bind_param('ss', $_SESSION['user_id'], $sid);
+                    $stmt2->execute();
+
+                    $result = mysqli_fetch_array($stmt2->get_result());
+
+                    $check = null;
+
+                    if (isset($result['positive'])) {
+                        $checkResult = $result['positive'];
+
+                        $check = '+';
+
+                        if ($checkResult == -1) {
+                            $check = '-';
+                        }
+                    }
+
+                ?>
+                <form action="storyvote.php" method="POST">
+                    <button name="sid" class="btn <? if($check=='+'): ?>btn-success <?php else: ?> btn-primary <? endif; ?>" value="<?= $story_id; ?>">Like</button>
                      <input type="hidden" name="positive" value="1">
                 </form>
-                <form action="storyvote.php" method="post">
-                    <button name="sid" class="btn btn-primary" value="<?php echo $story_id; ?>">Dislike</button>
+                <form action="storyvote.php" method="POST">
+                    <button name="sid" class="btn <? if($check=='-'): ?>btn-success <?php else: ?> btn-primary <? endif; ?>" value="<?= $story_id; ?>">Dislike</button>
                      <input type="hidden" name="positive" value="-1">
                 </form>
                 <?php else: ?>
@@ -84,7 +103,7 @@ while($row = mysqli_fetch_assoc($story)){
                     <label for="content-area">Write your path</label>
                     <textarea class="form-control" rows="3" id="content-area" name="content"></textarea>
                 </div>
-                <input type="hidden" name="sid" value="<?php echo $story_id; ?>">
+                <input type="hidden" name="sid" value="<?= $story_id ?>">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
             <?php else: ?>
@@ -110,9 +129,7 @@ while($row = mysqli_fetch_assoc($story)){
                 <div class="upvote"><strong>Rating:</strong> <?php if($path_upvote == NULL) echo "No one rated yet"; else echo $path_upvote; ?></div>
                 <a href="path.php?pid=<?= $pid ?>" class="btn btn-primary">Read</a>
             </div>
-              <?php
-                endwhile;
-            ?>  
+            <?php endwhile; ?>
         </div>
     </div>
 

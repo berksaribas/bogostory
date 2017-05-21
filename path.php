@@ -56,13 +56,32 @@ while($row = mysqli_fetch_assoc($path)){
         <div class="alert alert-info" style="margin-top: 1rem;" role="alert">
             <strong>Rating: </strong> <?php if($path_upvote== NULL) echo "No one has voted yet."; else echo $path_upvote." with ".$path_vote_count." users voted"."."; ?>
             <div class="rate-holder">
-                <?php if (isset($_SESSION['user_id'])): ?>
+                <?php if (isset($_SESSION['user_id'])):
+                    $stmt2 = $db->prepare('SELECT positive FROM path_votes WHERE uid = ? AND pid = ?');
+                    $stmt2->bind_param('ss', $_SESSION['user_id'], $pid);
+                    $stmt2->execute();
+
+                    $result = mysqli_fetch_array($stmt2->get_result());
+
+                    $check = null;
+
+                    if (isset($result['positive'])) {
+                        $checkResult = $result['positive'];
+
+                        $check = '+';
+
+                        if ($checkResult == -1) {
+                            $check = '-';
+                        }
+                    }
+
+                ?>
                 <form action="pathvote.php" method="post">
-                    <button name="pid" class="btn btn-primary" value="<?php echo $path_id; ?>">Like</button>
+                    <button name="pid" class="btn <? if($check=='+'): ?>btn-success <?php else: ?> btn-primary <? endif; ?>" value="<?php echo $path_id; ?>">Like</button>
                      <input type="hidden" name="positive" value="1">
                 </form>
                 <form action="pathvote.php" method="post">
-                    <button name="pid" class="btn btn-primary" value="<?php echo $path_id; ?>">Dislike</button>
+                    <button name="pid" class="btn <? if($check=='-'): ?>btn-success <?php else: ?> btn-primary <? endif; ?>" value="<?php echo $path_id; ?>">Dislike</button>
                      <input type="hidden" name="positive" value="-1">
                 </form>
                 <?php else: ?>
