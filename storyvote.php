@@ -9,11 +9,11 @@ include "connector.php";
 session_start();
 
 $uid = $_SESSION['user_id'];
-$pid = $_POST['pid'];
+$sid = $_POST['sid'];
 $positive = $_POST['positive'];
 
-$records = $db->prepare('INSERT INTO votes (uid, pid, positive) VALUES (?, ?, ?)');
-$records->bind_param('sss', $pid, $uid, $positive);
+$records = $db->prepare('INSERT INTO story_votes (uid, sid, positive) VALUES (?, ?, ?)');
+$records->bind_param('sss', $uid, $sid, $positive);
 $records->execute();
 
 header('Location: ' . $_SERVER['HTTP_REFERER']);

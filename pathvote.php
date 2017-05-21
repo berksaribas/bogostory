@@ -12,8 +12,8 @@ $uid = $_SESSION['user_id'];
 $pid = $_POST['pid'];
 $positive = $_POST['positive'];
 
-$records = $db->prepare('INSERT INTO votes (uid, pid, positive) VALUES (?, ?, ?)');
-$records->bind_param('sss', $pid, $uid, $positive);
+$records = $db->prepare('INSERT INTO path_votes (uid, pid, positive) VALUES (?, ?, ?)');
+$records->bind_param('sss', $uid, $pid, $positive);
 $records->execute();
 
 header('Location: ' . $_SERVER['HTTP_REFERER']);

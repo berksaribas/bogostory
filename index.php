@@ -4,7 +4,7 @@ $latest_stories_sql = $db -> prepare("SELECT s.*, i.link FROM stories s, images 
 $latest_stories_sql -> execute();
 $latest_stories = $latest_stories_sql -> get_result();
 
-$featured_stories_sql = $db -> prepare("SELECT s.*, i.link, COUNT(v.vid) AS c, SUM(v.positive) AS sum FROM stories s LEFT JOIN votes v ON v.sid=s.sid LEFT JOIN images i ON i.sid=s.sid GROUP BY v.sid ORDER BY sum DESC LIMIT 4");
+$featured_stories_sql = $db -> prepare("SELECT s.*, i.link, COUNT(v.vid) AS c, SUM(v.positive) AS sum FROM stories s LEFT JOIN story_votes v ON v.sid=s.sid LEFT JOIN images i ON i.sid=s.sid GROUP BY v.sid ORDER BY sum DESC LIMIT 4");
 $featured_stories_sql -> execute();
 $featured_stories = $featured_stories_sql -> get_result();
 
