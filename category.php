@@ -23,9 +23,9 @@ $category_stories = $category_stories_sql -> get_result();
             <div class="card" style="width: 15rem;">
               <img class="card-img-top" src="<?= $img ?>">
               <div class="card-block">
-                <h4 class="card-title"><?php echo $name; ?></h4>
+                <h4 class="card-title"><?= $name ?></h4>
                 <p class="card-text"><?php echo substr($content,0,100)."..."; ?></p>
-                <a href="story.php?sid=<?php echo $sid; ?>" class="btn btn-primary">Read more</a>
+                <a href="story.php?sid=<?= $sid ?>" class="btn btn-primary">Read more</a>
               </div>
             </div>
             <?php

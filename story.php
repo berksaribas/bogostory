@@ -7,7 +7,7 @@ $story_sql -> bind_param("s", $sid);
 $story_sql -> execute();
 $story = $story_sql -> get_result();
 
-$main_paths_sql = $db -> prepare("SELECT p.*, u.username, COUNT(v.vid) AS c, SUM(v.positive) AS sum FROM paths p LEFT JOIN path_votes v ON p.pid = v.pid LEFT JOIN users u ON u.uid=p.uid WHERE p.sid = ? AND p.parent_pid IS NULL GROUP BY v.pid ORDER BY sum DESC");
+$main_paths_sql = $db -> prepare("SELECT p.*, u.username, COUNT(v.vid) AS c, SUM(v.positive) AS sum FROM paths p LEFT JOIN path_votes v ON p.pid = v.pid LEFT JOIN users u ON u.uid=p.uid WHERE p.sid = ? AND p.parent_pid IS NULL GROUP BY p.pid ORDER BY sum DESC");
 $main_paths_sql -> bind_param("s", $sid);
 $main_paths_sql -> execute();
 $main_paths = $main_paths_sql -> get_result();
@@ -72,11 +72,11 @@ while($row = mysqli_fetch_assoc($story)){
 
                 ?>
                 <form action="storyvote.php" method="POST">
-                    <button name="sid" class="btn <? if($check=='+'): ?>btn-success <?php else: ?> btn-primary <? endif; ?>" value="<?= $story_id; ?>">Like</button>
+                    <button name="sid" class="btn <?php if($check=='+'): ?>btn-success <?php else: ?> btn-primary <?php endif; ?>" value="<?= $story_id; ?>">Like</button>
                      <input type="hidden" name="positive" value="1">
                 </form>
                 <form action="storyvote.php" method="POST">
-                    <button name="sid" class="btn <? if($check=='-'): ?>btn-success <?php else: ?> btn-primary <? endif; ?>" value="<?= $story_id; ?>">Dislike</button>
+                    <button name="sid" class="btn <?php if($check=='-'): ?>btn-success <?php else: ?> btn-primary <?php endif; ?>" value="<?= $story_id; ?>">Dislike</button>
                      <input type="hidden" name="positive" value="-1">
                 </form>
                 <?php else: ?>

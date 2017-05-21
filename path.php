@@ -7,7 +7,7 @@ $path_sql -> bind_param("s", $pid);
 $path_sql -> execute();
 $path = $path_sql -> get_result();
 
-$child_paths_sql = $db -> prepare("SELECT p.*, u.username, COUNT(v.vid) AS c, SUM(v.positive) AS sum FROM paths p LEFT JOIN path_votes v ON p.pid = v.pid LEFT JOIN users u ON u.uid=p.uid WHERE p.parent_pid = ? GROUP BY v.pid ORDER BY sum DESC");
+$child_paths_sql = $db -> prepare("SELECT p.*, u.username, COUNT(v.vid) AS c, SUM(v.positive) AS sum FROM paths p LEFT JOIN path_votes v ON p.pid = v.pid LEFT JOIN users u ON u.uid=p.uid WHERE p.parent_pid = ? GROUP BY p.pid ORDER BY sum DESC");
 $child_paths_sql -> bind_param("s", $pid);
 $child_paths_sql -> execute();
 $child_paths = $child_paths_sql -> get_result();
@@ -24,6 +24,7 @@ $category_id = NULL;
 $path_username = NULL;
 $path_userid = NULL;
 $path_id = NULL;
+$path_parentid = NULL;
 
 while($row = mysqli_fetch_assoc($path)){
     $story_name = $row['sname'];
@@ -38,6 +39,18 @@ while($row = mysqli_fetch_assoc($path)){
     $path_username = $row['username'];
     $path_userid = $row['uid'];
     $path_id = $row['pid'];
+    $path_parentid = $row['parent_pid'];
+}
+
+if($path_parentid != NULL){
+    $parent_path_sql = $db -> prepare("SELECT p.* FROM paths p WHERE p.pid = ?");
+    $parent_path_sql -> bind_param("s", $path_parentid);
+    $parent_path_sql -> execute();
+    $parent_path = $parent_path_sql -> get_result();
+    $parent_path_summary = NULL;
+    while($row = mysqli_fetch_assoc($parent_path)){
+        $parent_path_summary = $row['summary'];
+    }
 }
 
 ?>
@@ -46,13 +59,18 @@ while($row = mysqli_fetch_assoc($path)){
     <div class="field">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-          <li class="breadcrumb-item"><a href="category.php?cid=<?= $category_id; ?>"><?= $category_name; ?></a></li>
-            <li class="breadcrumb-item"><a href="story.php?sid=<?= $story_id; ?>"><?= $story_name; ?></a></li>
+            <li class="breadcrumb-item">
+                <?php if ($path_parentid == NULL): ?>
+                <a href="story.php?sid=<?= $story_id; ?>"><?= $story_name; ?></a>
+                <?php else: ?>
+                <a href="path.php?pid=<?= $path_parentid; ?>"><?= $parent_path_summary; ?></a>
+                <?php endif; ?>
+            </li>
             <li class="breadcrumb-item active"><?= $path_summary; ?></li>
         </ol>
     </div>
     <div class="field">
-        <div class="field-title"><?php echo $story_name." -> ".$path_summary; ?><div class="author">A path by <a href="user.php?uid=<?= $path_userid; ?>"><?= $path_username; ?></a></div></div>
+        <div class="field-title"><?= $path_summary; ?><div class="author">A path by <a href="user.php?uid=<?= $path_userid; ?>"><?= $path_username; ?></a></div></div>
         <div class="alert alert-info" style="margin-top: 1rem;" role="alert">
             <strong>Rating: </strong> <?php if($path_upvote== NULL) echo "No one has voted yet."; else echo $path_upvote." with ".$path_vote_count." users voted"."."; ?>
             <div class="rate-holder">
@@ -77,11 +95,11 @@ while($row = mysqli_fetch_assoc($path)){
 
                 ?>
                 <form action="pathvote.php" method="post">
-                    <button name="pid" class="btn <? if($check=='+'): ?>btn-success <?php else: ?> btn-primary <? endif; ?>" value="<?php echo $path_id; ?>">Like</button>
+                    <button name="pid" class="btn <?php if($check=='+'): ?>btn-success <?php else: ?> btn-primary <?php endif; ?>" value="<?php echo $path_id; ?>">Like</button>
                      <input type="hidden" name="positive" value="1">
                 </form>
                 <form action="pathvote.php" method="post">
-                    <button name="pid" class="btn <? if($check=='-'): ?>btn-success <?php else: ?> btn-primary <? endif; ?>" value="<?php echo $path_id; ?>">Dislike</button>
+                    <button name="pid" class="btn <?php if($check=='-'): ?>btn-success <?php else: ?> btn-primary <?php endif; ?>" value="<?php echo $path_id; ?>">Dislike</button>
                      <input type="hidden" name="positive" value="-1">
                 </form>
                 <?php else: ?>
@@ -107,7 +125,7 @@ while($row = mysqli_fetch_assoc($path)){
                     <label for="content-area">Write your path</label>
                     <textarea class="form-control" rows="3" id="content-area" name="content"></textarea>
                 </div>
-                <input type="hidden" name="pid" value="<?php echo $path_id; ?>">
+                <input type="hidden" name="pid" value="<?= $path_id ?>">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
             <?php else: ?>
