@@ -10,12 +10,12 @@ $success = false;
 
 $message = '';
 
-if(!empty($_POST['email']) && $_POST['username'] &&!empty($_POST['password'])) {
+if(!empty($_POST['email']) && $_POST['username'] &&!empty($_POST['password']) &&!empty($_POST['image'])) {
     do {
         $email = trim($_POST['email']);
         $username = trim($_POST['username']);
         $password  = password_hash($_POST['password'], PASSWORD_BCRYPT);
-
+        $image = trim($_POST['image']);
         // Checking the existence of the email
         $sql = "SELECT EXISTS(SELECT 1 FROM users WHERE email = ?) as test";
         $stmt = $db->prepare($sql);
@@ -51,9 +51,9 @@ if(!empty($_POST['email']) && $_POST['username'] &&!empty($_POST['password'])) {
         }
 
         // Register the user
-        $sql = "INSERT INTO users (email, username, password) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO users (email, username, password, image) VALUES (?, ?, ?, ?)";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param('sss', $email, $username, $password);
+        $stmt->bind_param('sss', $email, $username, $password, $image);
 
         if ($stmt->execute()) {
             $success = true;
@@ -76,6 +76,10 @@ if(!empty($_POST['email']) && $_POST['username'] &&!empty($_POST['password'])) {
         <div class="form-group">
             <label for="username">Username:</label>
             <input type="name" class="form-control" name="username" id="username">
+        </div>
+        <div class="form-group">
+            <label for="image">Profile Picture:</label>
+            <input type="name" class="form-control" name="image" id="image">
         </div>
         <div class="form-group">
             <label for="pwd">Password:</label>
