@@ -13,6 +13,12 @@ $uid = $_SESSION['user_id'];
 $sid = $_POST['sid'];
 $positive = $_POST['positive'];
 
+if ($positive <= 0) {
+    $positive = -1;
+} else {
+    $positive = 1;
+}
+
 do {
     $stmt = $db->prepare('INSERT INTO story_votes (uid, sid, positive) VALUES (?, ?, ?)');
     $stmt->bind_param('sss', $uid, $sid, $positive);

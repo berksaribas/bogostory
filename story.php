@@ -100,6 +100,10 @@ while($row = mysqli_fetch_assoc($story)){
                     <input type="text" class="form-control" name="summary" id="summary" placeholder="Write here...">
                   </div>
                 <div class="form-group">
+                    <label for="image">Please provide an image URL (optional)</label>
+                    <input type="text" class="form-control" name="image_url" id="image" placeholder="http://your-url/image.jpg">
+                </div>
+                <div class="form-group">
                     <label for="content-area">Write your path</label>
                     <textarea class="form-control" rows="3" id="content-area" name="content"></textarea>
                 </div>

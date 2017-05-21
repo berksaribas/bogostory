@@ -13,6 +13,12 @@ $uid = $_SESSION['user_id'];
 $pid = $_POST['pid'];
 $positive = $_POST['positive'];
 
+if ($positive <= 0) {
+    $positive = -1;
+} else {
+    $positive = 1;
+}
+
 do {
     $stmt = $db->prepare('INSERT INTO path_votes (uid, pid, positive) VALUES (?, ?, ?)');
     $stmt->bind_param('sss', $uid, $pid, $positive);
