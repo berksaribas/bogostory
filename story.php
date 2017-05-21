@@ -40,18 +40,18 @@ while($row = mysqli_fetch_assoc($story)){
     <div class="field">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-          <li class="breadcrumb-item"><a href="category.php?cid=<?php echo $category_id; ?>"><?php echo $category_name; ?></a></li>
-          <li class="breadcrumb-item active"><?php echo $story_name; ?></li>
+          <li class="breadcrumb-item"><a href="category.php?cid=<?= $category_id; ?>"><?= $category_name; ?></a></li>
+          <li class="breadcrumb-item active"><?= $story_name; ?></li>
         </ol>
     </div>
     <div class="field">
-        <div class="field-title"><?php echo $story_name; ?><div class="author">A story by <a href="user.php?uid=<?php echo $story_userid; ?>"><?php echo $story_username; ?></a></div></div>
+        <div class="field-title"><?= $story_name; ?><div class="author">A story by <a href="user.php?uid=<?= $story_userid; ?>"><?= $story_username; ?></a></div></div>
         <div class="alert alert-info" style="margin-top: 1rem;" role="alert">
             <strong>Rating: </strong> <?php if($story_upvote== NULL) echo "No one has voted yet."; else echo $story_upvote." with ".$story_vote_count." users voted"."."; ?>
         </div>
         <div class="field-content align-start">
-            <img class="story-img" src="<?php echo $story_image; ?>">
-            <?php echo $story_content; ?>
+            <img class="story-img" src="<?= $story_image; ?>">
+            <?= $story_content; ?>
         </div>
         
     </div>
@@ -66,12 +66,12 @@ while($row = mysqli_fetch_assoc($story)){
                     $path_upvote = $row['sum'];
             ?>
             <div class="path">
-                <div class="username"><strong><?php echo $summary; ?></strong>
-                    <div class="author"> written by: <?php echo $username; ?></div
+                <div class="username"><strong><?= $summary ?></strong>
+                    <div class="author"> written by: <?= $username ?></div
                     </div>
                         </div>
-                <div class="upvote"><strong>Rating:</strong> <?php echo $path_upvote; ?></div>
-                <a href="path.php?pid=<?php echo $pid; ?>" class="btn btn-primary">Read</a>
+                <div class="upvote"><strong>Rating:</strong> <?= $path_upvote ?></div>
+                <a href="path.php?pid=<?= $pid ?>" class="btn btn-primary">Read</a>
             
             <?php
                 endwhile;

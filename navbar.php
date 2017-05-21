@@ -21,14 +21,18 @@ $categories = mysqli_query($db, $categories_sql);
                 $cid = $row['cid'];
                 $name = $row['name'];
             ?>
-          <a class="dropdown-item" href="category.php?cid=<?php echo $cid; ?>"><?php echo $name; ?></a>
+          <a class="dropdown-item" href="category.php?cid=<?= $cid ?>"><?= $name ?></a>
             <?php endwhile; ?>
         </div>
       </li>
     </ul>
 	<ul class="navbar-nav">
 		<li class="nav-item my-2 my-lg-0">
-			<a class="nav-link" href="#">Login/Register</a>
+            <?php if (isset($_SESSION['user_id'])): ?>
+            <a class="nav-link" href="logout.php">Logout</a>
+            <?php else: ?>
+			<a class="nav-link" href="login.php">Login/Register</a>
+            <?php endif; ?>
 		</li>
 	</ul>
   </div>

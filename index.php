@@ -23,11 +23,11 @@ $featured_stories = $featured_stories_sql -> get_result();
                     $img = $row['link'];
                     ?>
             <div class="card" style="width: 15rem;">
-              <img class="card-img-top" src="<?php echo $img ?>" alt="Card image cap">
+              <img class="card-img-top" src="<?= $img ?>" alt="Card image cap">
               <div class="card-block">
-                <h4 class="card-title"><?php echo $name; ?></h4>
-                <p class="card-text"><?php echo substr($content,0,100)."..."; ?></p>
-                <a href="story.php?sid=<?php echo $sid; ?>" class="btn btn-primary">Read more</a>
+                <h4 class="card-title"><?= $name ?></h4>
+                <p class="card-text"><?= substr($content,0,100)."..." ?></p>
+                <a href="story.php?sid=<?= $sid ?>" class="btn btn-primary">Read more</a>
               </div>
             </div>
             <?php
@@ -48,11 +48,11 @@ $featured_stories = $featured_stories_sql -> get_result();
                     $img = $row['link'];
                     ?>
             <div class="card" style="width: 15rem;">
-              <img class="card-img-top" src="<?php echo $img ?>" alt="Card image cap">
+              <img class="card-img-top" src="<?= $img ?>" alt="Card image cap">
               <div class="card-block">
-                <h4 class="card-title"><?php echo $name; ?></h4>
-                <p class="card-text"><?php echo substr($content,0,100)."..."; ?></p>
-                <a href="story.php?sid=<?php echo $sid; ?>" class="btn btn-primary">Read more</a>
+                <h4 class="card-title"><?= $name ?></h4>
+                <p class="card-text"><?= substr($content,0,100)."..." ?></p>
+                <a href="story.php?sid=<?= $sid ?>" class="btn btn-primary">Read more</a>
               </div>
             </div>
             <?php
